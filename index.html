@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고양이 가라사대</title>
+  </head>
+  <style>
+    body {
+      text-align: center;
+    }
+    .main-card button {
+      position: relative;
+      left: -45px;
+      bottom: 15px;
+    }
+    .favorites {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+  </style>
+
+  <body>
+    <div id="app"></div>
+    
+    <!-- 리액트 및 리액트 DOM 라이브러리 추가 -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- babel(바벨) 추가-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      console.log("야옹");
+
+      const CatItem = (props) => {       //리액트에서는 넘어온 값을 첫번쨰 인자에 저장 
+        return (
+        <li>
+          <img src={props.img} style={{width: '150px'}} />  {/* 인자로 오브젝트 값이 옴*/}
+        </li>
+        );
+      }
+
+      //리액트에서는 인자를 넘겨준 것을 props(프롭스)라고 함
+      const Title = props => {
+        return (
+          <h1>{props.children}</h1> // 요소 안의 내용은 children으로 넘어옴
+          );
+      }
+
+      const Form = () => {
+
+        function hendleFormSubmit(event) {
+          event.preventDefault();
+          console.log('폼 전송됨');
+          setCounter(counter + 1);
+        }
+
+        return (
+        <form onSubmit = {hendleFormSubmit}>
+          <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
+          <button type="submit" >생성</button>
+        </form>
+        );
+      };
+
+      const Favorites = () => {
+        return (
+          <ul className="favorites">
+            <CatItem img="https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn"/>
+            <CatItem img="https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript" />
+        </ul>
+        );
+      }
+
+      const MainCard = (props) => {
+        function hendleHeartClick() {
+          console.log("하트 누름");
+        }
+        function hendleMouseOver() {
+          console.log("마우스오버")
+        }
+
+        return(
+        <div className="main-card">
+          <img src={props.img} alt="고양이 "width="400" />
+          <button 
+            onClick={hendleHeartClick} 
+            onMouseOver={hendleMouseOver}>🤍</button>
+      </div>
+        );
+      }
+
+      //두개의 변수를 render 하고 싶을 떄 
+      
+      const App = () => {
+        const [counter, setCounter] = React.useState(100);
+
+        console.log("카운터", counter)
+
+         return (
+          <CatItem>
+          <Title>{counter}번째 고양이 가라사대2</Title>
+          <Form />
+          <MainCard img="https://cataas.com/cat/60b73094e04e18001194a309/says/react" />
+          <Favorites />
+        </CatItem>
+         )
+      }
+
+      const 여기다가그려 = document.querySelector('#app');
+
+      ReactDOM.render(<App />, 여기다가그려)
+      
+
+
+    </script>
+  </body>
+</html>
